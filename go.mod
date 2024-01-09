@@ -7,7 +7,3 @@ require (
 	github.com/go-chi/cors v1.2.1 // direct
 	github.com/joho/godotenv v1.5.1 // direct
 )
-
-require github.com/mastercard/oauth1-signer-go v1.2.1 // direct
-
-require golang.org/x/crypto v0.1.0 // indirect

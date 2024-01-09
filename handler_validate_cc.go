@@ -9,7 +9,6 @@ import (
 )
 
 func (cfg *apiConfig) handlerValidateCC(w http.ResponseWriter, r *http.Request) {
-	const baseURL = "https://sandbox.api.mastercard.com"
 	type parameters struct {
 		CCNumber int `json:"credit_card_number"`
 	}
