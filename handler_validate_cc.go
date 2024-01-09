@@ -1,13 +1,11 @@
 package main
 
 import (
-	"bytes"
 	"encoding/json"
 	"log"
 	"net/http"
 
 	"github.com/MrAinslay/CCValidator/internal/validator"
-	"github.com/mastercard/oauth1-signer-go/interceptor"
 )
 
 func (cfg *apiConfig) handlerValidateCC(w http.ResponseWriter, r *http.Request) {
@@ -16,8 +14,7 @@ func (cfg *apiConfig) handlerValidateCC(w http.ResponseWriter, r *http.Request) 
 		CCNumber int `json:"credit_card_number"`
 	}
 	type rsp struct {
-		Body       string `json:"message"`
-		AuthHeader string `json:"auth_header"`
+		Body string `json:"message"`
 	}
 
 	decoder := json.NewDecoder(r.Body)
@@ -38,24 +35,6 @@ func (cfg *apiConfig) handlerValidateCC(w http.ResponseWriter, r *http.Request) 
 		respondWithErr(w, 500, "Invalid credit card number")
 		return
 	}
-	w.Header().Add("Content-Type", "application/json")
-	httpClient, _ := interceptor.GetHttpClient(cfg.consumerKey, cfg.pathToCerts, cfg.keyPass)
-	jsonBody := []byte(`{"accountRange": "53514204"}`)
-	bodyReader := bytes.NewReader(jsonBody)
-	resp, err := httpClient.Post(baseURL+"/bin-ranges/account-searches", "application/json", bodyReader)
-	if err != nil {
-		log.Printf("Error posting to api: %v", err)
-		respondWithErr(w, 500, "Couldn't post to api")
-		return
-	}
-	log.Println(&resp.Body, *resp, resp.Body, resp)
-	dcder := json.NewDecoder(resp.Body)
-	rspns := BINInfo{}
-	if err := dcder.Decode(&rspns); err != nil {
-		log.Printf("Error decoding response: %v", err)
-		respondWithErr(w, 500, "Couldn't decode response")
-		return
-	}
 
-	respondWithJSON(w, 200, rspns)
+	respondWithJSON(w, 200, rsp{Body: "Valid credit card number"})
 }
