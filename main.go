@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"net/http"
-	"net/url"
 	"os"
 
 	"github.com/go-chi/chi/v5"
@@ -12,10 +11,8 @@ import (
 )
 
 type apiConfig struct {
-	pathToCerts string
-	consumerKey string
-	keyPass     string
-	url         *url.URL
+	apiKey  string
+	baseUrl string
 }
 
 func main() {
@@ -25,17 +22,12 @@ func main() {
 		log.Fatalln("PORT enviroment is not set")
 	}
 
-	pthCerts := os.Getenv("CERTS_PATH")
-	cnsmrKey := os.Getenv("CONSUMER_KEY")
-	keyPass := os.Getenv("KEY_PASSWORD")
-	strUrl := os.Getenv("URL")
-	parsedUrl, _ := url.Parse(strUrl)
+	baseUrl := os.Getenv("BASE_URL")
+	apiKey := os.Getenv("API_KEY")
 
 	cfg := apiConfig{
-		pathToCerts: pthCerts,
-		consumerKey: cnsmrKey,
-		keyPass:     keyPass,
-		url:         parsedUrl,
+		apiKey:  apiKey,
+		baseUrl: baseUrl,
 	}
 
 	router := chi.NewRouter()
@@ -53,6 +45,7 @@ func main() {
 	router.Handle("/", http.FileServer(http.Dir(".")))
 
 	v1Router.Get("/validate", cfg.handlerValidateCC)
+	v1Router.Get("/accountrng", cfg.handlerAccountRange)
 
 	router.Mount("/v1", v1Router)
 

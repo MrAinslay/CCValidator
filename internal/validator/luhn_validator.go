@@ -1,7 +1,9 @@
 package validator
 
-func ValidateNum(n int) bool {
-	digits := seperateNum(n)
+import "fmt"
+
+func ValidateNum(s string) bool {
+	digits := seperateNum(s)
 
 	var sum int
 	for i := len(digits) - 1; i >= 0; i-- {
@@ -11,7 +13,7 @@ func ValidateNum(n int) bool {
 			mult := digits[i] * 2
 
 			if mult > 9 {
-				spratedNum := seperateNum(mult)
+				spratedNum := seperateNum(fmt.Sprint(mult))
 				sum += spratedNum[0] + spratedNum[1]
 			} else {
 				sum += mult

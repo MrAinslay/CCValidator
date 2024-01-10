@@ -5,9 +5,8 @@ import (
 	"strings"
 )
 
-func seperateNum(i int) []int {
-	strNum := strconv.Itoa(i)
-	splitStrNum := strings.Split(strNum, "")
+func seperateNum(s string) []int {
+	splitStrNum := strings.Split(s, "")
 	digits := make([]int, len(splitStrNum))
 	for i, str := range splitStrNum {
 		num, _ := strconv.Atoi(str)

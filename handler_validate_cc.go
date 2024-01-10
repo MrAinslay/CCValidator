@@ -2,18 +2,17 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/MrAinslay/CCValidator/internal/validator"
 )
 
 func (cfg *apiConfig) handlerValidateCC(w http.ResponseWriter, r *http.Request) {
 	type parameters struct {
-		CCNumber int `json:"credit_card_number"`
-	}
-	type rsp struct {
-		Body string `json:"message"`
+		CCNumber string `json:"credit_card_number"`
 	}
 
 	decoder := json.NewDecoder(r.Body)
@@ -24,7 +23,7 @@ func (cfg *apiConfig) handlerValidateCC(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	if params.CCNumber == 0 {
+	if params.CCNumber == "" {
 		respondWithErr(w, 500, "Invalid json body")
 		return
 	}
@@ -35,5 +34,18 @@ func (cfg *apiConfig) handlerValidateCC(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	respondWithJSON(w, 200, rsp{Body: "Valid credit card number"})
+	strNum := fmt.Sprint(params.CCNumber)
+	digits := strings.Split(strNum, "")
+	accountRange := ""
+	for i := 0; i < 6; i++ {
+		accountRange += digits[i]
+	}
+	dat, err := cfg.getBinData(accountRange)
+	if err != nil {
+		log.Printf("Error getting bin data: %v", err)
+		respondWithErr(w, 500, "Couldn't get BIN data")
+		return
+	}
+
+	respondWithJSON(w, 200, dat)
 }
