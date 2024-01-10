@@ -6,10 +6,11 @@
 To use this API you need to get an API Key from bintables.com. All you need to do is register an account. Also you need to create a key.env file in the root of the path containing the PORT, API_KEY and BASE_URL keys
 
 ## KEY.ENV BODY
+```
 PORT="8080"
 API_KEY="<YOUR_API_KEY>"
 BASE_URL="https://api.bintable.com/v1/"
-
+```
  # ENDPOINTS
  ## GET http://localhost:8080/v1/validate ENDPOINT
 
@@ -18,7 +19,7 @@ BASE_URL="https://api.bintable.com/v1/"
  ### REQUEST BODY
  ```json
  {
-  "credit_card_number": "324000xxxxxxxxxx"
+   "credit_card_number": "324000xxxxxxxxxx"
  }
  ```
  ### RESPONSE BODY
@@ -50,7 +51,7 @@ BASE_URL="https://api.bintable.com/v1/"
  ### REQUEST BODY
  ```json
 {
- "account_range": "324000"
+  "account_range": "324000"
 }
 ```
 ### RESPONSE BODY
