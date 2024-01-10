@@ -76,4 +76,37 @@ BASE_URL="https://api.bintable.com/v1/"
    }
  }
  ```
- 
+# EXTRA
+
+You can also edit the API endpoints to return all the information returned by Bintable's REST API
+
+## DETAILED RESPONSE BODY
+```json
+{
+    "result": 200,
+    "message": "SUCCESS",
+    "data": {
+        "card": {
+            "scheme": "American express",
+            "type": "Debit",
+            "category": "Business",
+            "length": 15,
+            "checkluhn": 1,
+            "cvvlen": 4
+        },
+        "country": {
+            "name": "United states of america",
+            "code": "us",
+            "flag": "🇺🇸",
+            "currency": "United States dollar",
+            "currency_code": "USD"
+        },
+        "bank": {
+            "name": "BRANCH BANKING AND TRUST COMPANY",
+            "website": "http://www.bbt.com/",
+            "phone": "910-914-8250 OR 800-226-5228"
+        }
+    }
+}
+```
+
