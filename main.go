@@ -16,7 +16,7 @@ type apiConfig struct {
 }
 
 func main() {
-	godotenv.Load("Key.env")
+	godotenv.Load("key.env")
 	port := os.Getenv("PORT")
 	if port == "" {
 		log.Fatalln("PORT enviroment is not set")
