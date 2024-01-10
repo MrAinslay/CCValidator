@@ -30,6 +30,7 @@ type BinData struct {
 type BankInfo struct {
 	Name    string `json:"name"`
 	Website string `json:"website"`
+	Phone   string `json:"phone"`
 }
 
 type CardInfo struct {
@@ -52,6 +53,7 @@ type DataInfo struct {
 	Bank struct {
 		Name    string `json:"name"`
 		Website string `json:"website"`
+		Phone   string `json:"phone"`
 	} `json:"bank"`
 	Country struct {
 		Name string `json:"name"`
@@ -70,6 +72,7 @@ type BinResponseData struct {
 		Bank struct {
 			Name    string `json:"name"`
 			Website string `json:"website"`
+			Phone   string `json:"phone"`
 		} `json:"bank"`
 		Country struct {
 			Name string `json:"name"`

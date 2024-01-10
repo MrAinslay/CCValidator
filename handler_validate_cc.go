@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"strings"
@@ -28,14 +27,19 @@ func (cfg *apiConfig) handlerValidateCC(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	ok := validator.ValidateNum(params.CCNumber)
+	ccNum := cleanIput(params.CCNumber)
+	if len(ccNum) < 16 {
+		log.Println("Invalid CC number")
+		respondWithErr(w, 404, "Invalid CC number")
+		return
+	}
+	ok := validator.ValidateNum(ccNum)
 	if !ok {
 		respondWithErr(w, 500, "Invalid credit card number")
 		return
 	}
 
-	strNum := fmt.Sprint(params.CCNumber)
-	digits := strings.Split(strNum, "")
+	digits := strings.Split(ccNum, "")
 	accountRange := ""
 	for i := 0; i < 6; i++ {
 		accountRange += digits[i]

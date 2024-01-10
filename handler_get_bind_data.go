@@ -34,6 +34,7 @@ func (cfg *apiConfig) getBinData(bin string) (BinResponseData, error) {
 			Bank: BankInfo{
 				Name:    dat.Data.Bank.Name,
 				Website: dat.Data.Bank.Website,
+				Phone:   dat.Data.Bank.Phone,
 			},
 			Country: CountryInfo{
 				Name: dat.Data.Country.Name,

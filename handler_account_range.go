@@ -25,7 +25,14 @@ func (cfg *apiConfig) handlerAccountRange(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	dat, err := cfg.getBinData(prm.AccountRng)
+	accRng := cleanIput(prm.AccountRng)
+	if len(accRng) != 6 {
+		log.Printf("Invalid account range lenght\naccount range lenght: %v", len(accRng))
+		respondWithErr(w, 401, "Account range lenght must be exactly 6 numbers")
+		return
+	}
+
+	dat, err := cfg.getBinData(accRng)
 	if err != nil {
 		log.Printf("Error retrieving BIN data from api: %v", err)
 		respondWithErr(w, 404, "Couldn't retrieve BIN data")
